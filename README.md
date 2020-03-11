@@ -1,78 +1,121 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+<h1>Read Me</h1>
+<p>
+    Run below commands on your terminal first to install node-modules repositories and other laravel dependencies:<br>
+    <code>npm install</code><br>
+    <code>composer install</code>
 </p>
+<p>
+To use Svelte-Loader always run on your first test and everytime you make changes with our Svelte Files:<br>
+    <code>npm run dev</code>
+<p>
+<p>Then run <br>
+    <code>php artisan serve</code>
+</p>
+<p>
+To add/create svelte components files go to /resource/js/components or you can also add more folder under /resources/js directory for your svelte resources.
+<p>
+    
+<h3>Features of Svelte-Preprocess</h3>
+<h4>Template tag support</h4>
+<p>
+Add vue-like support for defining your markup between a <template> tag. The tagname can be customized to something like markup for example. See #options.
+</p>
+<i>
+Note: only for auto preprocessing
+</i>
+<p> 
+    <code>
+    < template ><br>
+      < div > Hey < /div ><br>
+    < /template ><br>
+    < /code >
+</p>
+<p>
+< style ></ style >
+</p>
+<p>
+< script >< /script >
+</p>
+<h3>
+External files support
+</h3>
+< template src="./template.html" >< /template > <br>
+< script src="./script.js" >< /script > <br>
+< style src="./style.css" >< /style > <br>
+Global style support
+Add a global attribute to your style tag and instead of scoping the css, all of its content will be interpreted as global style.
 
-## About Laravel
+<style global>
+  div {
+    color: red;
+  }
+</style>
+Note1: needs postcss to be installed Note2: if you're using it as a standalone processor, it works best if added to the end of the processors array.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+To use PUG preprocessors for your HTML inside *.svelte file follow:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<template lang="pug">
+  div Posts
+  +each('posts as post')
+    a(href="{post.url}") {post.title}
+</template>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+To use SASS inside your *.svelte file use:
 
-## Learning Laravel
+<style lang="scss">
+  $color: red;
+  div {
+    color: $color;
+  }
+</style>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+Inside laravel.mix you can see this configuration
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+With svelte-loader
+  ...
+  module: {
+    rules: [
+      ...
+      {
+        test: /\.(html|svelte)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'svelte-loader',
+          options: {
+            preprocess: require('svelte-preprocess')({ /* options */ })
+          },
+        },
+      },
+      ...
+    ]
+  }
+  ...
+  
+Preprocessing modes
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+svelte-preprocess can be used in two ways: auto preprocessing and with stand-alone processors.
 
-## Contributing
+Limitations
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+pug
+Template blocks
+Some of Svelte's template syntax is invalid in pug. svelte-preprocess provides some pug mixins to represent svelte's {#...}{/...} blocks: +if(), +else(), +elseif(), +each(), +await(), +then(), +catch(), +debug().
 
-## Code of Conduct
+ul
+  +if('posts && posts.length > 1')
+    +each('posts as post')
+      li
+        a(rel="prefetch" href="blog/{post.slug}") {post.title}
+    +else()
+      span No posts :c
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Element attributes
+Pug encodes everything inside an element attribute to html entities, so attr="{foo && bar}" becomes attr="foo &amp;&amp; bar". To prevent this from happening, instead of using the = operator use != which won't encode your attribute value:
 
-## Security Vulnerabilities
+button(disabled!="{foo && bar}")
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Disclamer: Svelte-Preprocess info are from https://github.com/kaisermann/svelte-preprocess
+           You can visit that github repo for more information and if you want to add more preprocess script-support
