@@ -22,7 +22,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "svelte": "^3.19.2",
+        "svelte": "^3.49.0",
         "svelte-loader": "^2.13.6"
     }
 }
